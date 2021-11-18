@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
+# Create a board by adding Tiles to an array. idk
 class Board:
     def __init__(self,board):
         self.board = board
             
-        
         
     def printBoard(self):
         for i in range(9):
