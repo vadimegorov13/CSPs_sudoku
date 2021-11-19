@@ -1,75 +1,39 @@
-from Board import Board
 from CSP_sudoku import CSP
+from Backtrack_sudoku import Backtrack
+from time import time
+from copy import deepcopy
 
-"""
-
-This program reads in 9 characters in the same column then 9 rows,
-if file has more characters in the column, program rejects input.
-
-example of accepted file:
-    111111111
-    222222222
-    333333333
-    444444444
-    555555555
-    666666666
-    777707777
-    888888888
-    999999999
-
-"""
-
-
-def get_board():
-    # This piece is for if we want to input a text file via command line
-    # UserFile = input("input filename (ex: filename.txt)")
-    UserFile = "SodokuBoard.txt"
-    f = open(UserFile, "r")
-    full = []
-
-    for _ in range(9):
-        x = []
-        x.extend(f.readline())
-
-        # if "\n" is not in list, program doesn't die
-        try:
-            x.remove("\n")
-        except:
-            pass
-
-        if(len(x) != 9):
-            raise Exception("Input line is too short")
-
-        # converts from chars to ints
-        for i in range(len(x)):
-            x[i] = int(x[i])
-            if(x[i] < 0 or x[i] > 9):
-                raise Exception("An input number is out of domain")
-        full.append(x)
-    f.close()
-    return full
-
-def getBoard(filePath):
-    f = open(filePath)
+# Returns 2d array of integer numbers that were read from the file
+def getBoard(fileName):
+    f = open('sudokuTestingBoards/{}.txt'.format(fileName))
     file = f.readlines()
+    return [list(map(int, list(line.strip()))) for line in file]
 
-    f.close()
-
-    return [list(line.strip()) for line in file]
 
 def main():
     # Get path to the text file with a sudoku board
-    fileName = 'board1'
-    filePath = 'sudokuTestingBoards/{}.txt'.format(fileName)
-    board = getBoard(filePath)
+    fileName = 'expert'
+    board = getBoard(fileName)
 
-    # print(board)
-    
-    sudoku = Board(board)
-    sudoku.printBoard()
+    # Solve sudoku by using CSP
+    csp_solver = CSP(deepcopy(board))
+    start = time()
+    csp_solver.CSPsudoku()
+    end = time()
 
-    solve = CSP().backtrackSolve(sudoku)
-    # print(solve.board)
+    print(csp_solver)
+    print("Nodes opened: {}".format(csp_solver.nodes))
+    print("Time: {}\n".format(end - start))
+
+    # Solve sudoku by using Backtracking
+    backtrack_solver = Backtrack(deepcopy(board))
+    start = time()
+    backtrack_solver.BacktrackSudoku()
+    end = time()
+
+    print(backtrack_solver)
+    print("Nodes opened: {}".format(backtrack_solver.nodes))
+    print("Time: {}\n".format(end - start))
 
 
 if __name__ == '__main__':
