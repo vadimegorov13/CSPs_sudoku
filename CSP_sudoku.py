@@ -14,7 +14,7 @@ class CSP:
             for x in range(9):
                 p = self.board[y][x]
                 if(p == 0):
-                    board += "_ "
+                    board += "0 "
                 else:
                     board += str(p) + " "
             board += '\n'

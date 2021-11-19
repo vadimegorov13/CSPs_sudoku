@@ -17,10 +17,14 @@ def main():
 
     # Solve sudoku by using CSP
     csp_solver = CSP(deepcopy(board))
+    print("This is the original board: {}.txt\n".format(fileName))
+    print(csp_solver)
+    print("\n\n")
     start = time()
     csp_solver.CSPsudoku()
     end = time()
 
+    print("This is solved with CSP solver:\n")
     print(csp_solver)
     print("Nodes opened: {}".format(csp_solver.nodes))
     print("Time: {}\n".format(end - start))
@@ -31,6 +35,7 @@ def main():
     backtrack_solver.BacktrackSudoku()
     end = time()
 
+    print("This is solved with backtracking:\n")
     print(backtrack_solver)
     print("Nodes opened: {}".format(backtrack_solver.nodes))
     print("Time: {}\n".format(end - start))
