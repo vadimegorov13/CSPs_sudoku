@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+
 class CSP:
     def __init__(self, board):
         self.board = board
@@ -20,45 +21,11 @@ class CSP:
 
         return board
 
-    # Get the length of domain of the tile
-    # Helper function of the getTileIndex
-    def getDomainLength(self, domain):
-        # If tile already has a variable return 10 so that heuristic
-        # can ignore it basically
-        # else return length of the domain
-        if 10 in domain:
-            return 10
-        else:
-            return len(domain)
-
-    # Return indexs of the tile with the smallest domain length
-    def getTileIndex(self):
-        domains = list()
-
-        # Get domain length of a unsigned tiles
-        for domain in self.unassigned_vars:
-            domains.append(self.getDomainLength(domain))
-
-        # Get the tile with the smallest domain
-        min_domain = min(domains)
-
-        # If tile's domain is empty (already has a variable assigned)
-        # which means that puzzle is solved
-        # return -1 -1 indexes so we can kill recursing
-        if min_domain == 10:
-            return -1, -1
-
-        # Get y and x indexes of the tile
-        y = domains.index(min_domain) // 9
-        x = domains.index(min_domain) % 9
-
-        return y, x
-
     # Get domain of the tile
     # Constaints thing is happening here
     def getDomain(self, y, x, board):
         # Init domain list
-        domain = [1,2,3,4,5,6,7,8,9]
+        domain = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         # Remove variable from the domain if row already has this variable
         for i in range(9):
@@ -97,6 +64,40 @@ class CSP:
                     unassigned_variables.append([10])
 
         return unassigned_variables
+
+    # Get the length of domain of the tile
+    # Helper function of the getTileIndex
+    def getDomainLength(self, domain):
+        # If tile already has a variable return 10 so that heuristic
+        # can ignore it basically
+        # else return length of the domain
+        if 10 in domain:
+            return 10
+        else:
+            return len(domain)
+
+    # Return indexs of the tile with the smallest domain length
+    def getTileIndex(self):
+        domains = list()
+
+        # Get domain length of a unsigned tiles
+        for domain in self.unassigned_vars:
+            domains.append(self.getDomainLength(domain))
+
+        # Get the tile with the smallest domain
+        min_domain = min(domains)
+
+        # If tile's domain is empty (already has a variable assigned)
+        # which means that puzzle is solved
+        # return -1 -1 indexes so we can kill recursing
+        if min_domain == 10:
+            return -1, -1
+
+        # Get y and x indexes of the tile
+        y = domains.index(min_domain) // 9
+        x = domains.index(min_domain) % 9
+
+        return y, x
 
     # Solve sudoku by using CSP
     def CSPsudoku(self):
