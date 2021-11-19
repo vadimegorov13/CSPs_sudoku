@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-
 from Board import Board
+from CSP_sudoku import CSP
 
 """
 
@@ -20,41 +19,58 @@ example of accepted file:
 
 """
 
-def main():
-    #This piece is for if we want to input a text file via command line
-    #UserFile = input("input filename (ex: filename.txt)")
+
+def get_board():
+    # This piece is for if we want to input a text file via command line
+    # UserFile = input("input filename (ex: filename.txt)")
     UserFile = "SodokuBoard.txt"
-    
-    f = open(UserFile,"r")
+    f = open(UserFile, "r")
     full = []
-    
-    for j in range(9):
+
+    for _ in range(9):
         x = []
         x.extend(f.readline())
-        
-        #if "\n" is not in list, program doesn't die
-        try:    
+
+        # if "\n" is not in list, program doesn't die
+        try:
             x.remove("\n")
         except:
             pass
-        
+
         if(len(x) != 9):
             raise Exception("Input line is too short")
-            
-        #converts from chars to ints
+
+        # converts from chars to ints
         for i in range(len(x)):
             x[i] = int(x[i])
             if(x[i] < 0 or x[i] > 9):
                 raise Exception("An input number is out of domain")
         full.append(x)
     f.close()
+    return full
+
+def getBoard(filePath):
+    f = open(filePath)
+    file = f.readlines()
+
+    f.close()
+
+    return [list(line.strip()) for line in file]
+
+def main():
+    # Get path to the text file with a sudoku board
+    fileName = 'board1'
+    filePath = 'sudokuTestingBoards/{}.txt'.format(fileName)
+    board = getBoard(filePath)
+
+    # print(board)
     
-    #game begins
-    game = Board(full)
-    game.printBoard()
-    
-    
-    
-    
+    sudoku = Board(board)
+    sudoku.printBoard()
+
+    solve = CSP().backtrackSolve(sudoku)
+    # print(solve.board)
+
+
 if __name__ == '__main__':
     main()
