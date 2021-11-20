@@ -129,7 +129,7 @@ class CSP:
 
             # If recursion returned false assign 0 to the index of
             # current tile
-            self.board[y][x] = '0'
+            self.board[y][x] = 0
 
             # Restart the unassigned_vars
             self.unassigned_vars = unassigned_vars_copy

@@ -12,7 +12,7 @@ def getBoard(fileName):
 
 def main():
     # Get path to the text file with a sudoku board
-    fileName = 'empty'
+    fileName = 'expert'
     board = getBoard(fileName)
 
     # Solve sudoku by using CSP
