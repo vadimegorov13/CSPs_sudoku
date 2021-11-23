@@ -42,7 +42,7 @@ class Backtrack:
         return -1, -1
 
     # Solve sudoku by using Backtracking
-    def BacktrackSudoku(self):
+    def solve_sudoku(self):
         # Get location of the tile without variable
         y, x = self.getTileIndex()
 
@@ -60,7 +60,7 @@ class Backtrack:
                 self.board[y][x] = variable
 
                 # Recursion
-                if self.BacktrackSudoku():
+                if self.solve_sudoku():
                     return True
 
                 # Restart if recursion returns false

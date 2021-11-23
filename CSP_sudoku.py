@@ -100,7 +100,7 @@ class CSP:
         return y, x
 
     # Solve sudoku by using CSP
-    def CSPsudoku(self):
+    def solve_sudoku(self):
         # Get location of the tile with the smallest domain length
         y, x = self.getTileIndex()
 
@@ -124,7 +124,7 @@ class CSP:
             self.unassigned_vars = self.getUnassignedVariables()
 
             # Recursion
-            if self.CSPsudoku():
+            if self.solve_sudoku():
                 return True
 
             # If recursion returned false assign 0 to the index of
